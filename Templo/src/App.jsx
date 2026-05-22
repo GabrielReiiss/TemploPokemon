@@ -7,6 +7,7 @@ import './App.css'
 
 function App() {
   const [pokemon, setPokemon] = useState(null)
+  const [nextEvolutionPokemon, setNextEvolutionPokemon] = useState(null)
   const [botaoHover, setBotaoHover] = useState(false)
   const inputRef = useRef()
 
@@ -17,7 +18,10 @@ function App() {
     if (!pokemon == '') {
       try {
         const pokemonData = await axios.get(apiUrl)
+        const specieData = await axios.get(pokemonData.data.species.url)
+        const evolutionData = await axios.get(specieData.data.evolution_chain.url)
         setPokemon(pokemonData.data)
+        setNextEvolutionPokemon(evolutionData.data)
       } catch {
         window.alert('Pokémon não encontrado. Verifique a grafia.')
         return
@@ -45,7 +49,7 @@ function App() {
           </button>
         </div>
       </div>
-      {pokemon && <SearchedPokemon pokemon={pokemon} />}
+      {pokemon && <SearchedPokemon pokemon={pokemon} nextEvolutionPokemon={nextEvolutionPokemon} />}
     </div>
   )
 }
