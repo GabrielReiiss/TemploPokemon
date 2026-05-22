@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Slackey&display=swap');
 
 .container {
-    max-width: 1000px;
+    max-width: 1400px;
     padding: 25px;
     margin: 0 auto;
     text-align: center;
@@ -16,7 +16,6 @@
 
 .container-busca p {
     font-size: 25px;
-    margin-bottom: 8px;
     color: white;
 }
 
@@ -36,12 +35,11 @@ input {
     padding: 10px;
     border-radius: 5px;
     border: none;
-    width: 500px;
+    width: 1285px;
     outline: none;
 }
 
 button {
     padding: 10px;
-    margin-left: 20px;
     cursor: pointer;
 }
