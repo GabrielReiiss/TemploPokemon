@@ -1,6 +1,19 @@
 import './SearchedPokemon.css'
 
+function findNextEvolutions(chain, pokemonName) {
+    if (chain.species.name === pokemonName) {
+        return chain.evolves_to
+    }
+    for (const evo of chain.evolves_to) {
+        const result = findNextEvolutions(evo, pokemonName)
+        if (result !== null) return result
+    }
+    return null
+}
+
 function SearchedPokemon({ pokemon, nextEvolutionPokemon }) {
+
+    const nextEvolutions = findNextEvolutions(nextEvolutionPokemon.chain, pokemon.name)
 
     console.log(pokemon)
     console.log(nextEvolutionPokemon)
@@ -45,15 +58,13 @@ function SearchedPokemon({ pokemon, nextEvolutionPokemon }) {
                     />
                 </div>
                 <div className='nextEvolution-header'>
-                    <h3>{nextEvolutionPokemon.chain.evolves_to?.map((item, index) => {
-                        if (nextEvolutionPokemon.chain.evolves_to.length == 0){
-                            <p key={index}>Não possui evolução</p>
-                        } else if (nextEvolutionPokemon.chain.evolves_to.length > 2){
-                            return <p key={index}>{item.species.name}</p>
-                        } else {
-                            return <span key={index}>{item.evolves_to?.map((item2, index) => ( <p key={index}>{item2.species.name}</p> ))}</span>
-                        }
-                    })}</h3>
+                    {!nextEvolutions || nextEvolutions.length === 0 ? (
+                        <p>Não possui evolução</p>
+                    ) : (
+                        nextEvolutions.map((evo, index) => (
+                            <p key={index}>{evo.species.name}</p>
+                        ))
+                    )}
                 </div>
             </div>
         </div>

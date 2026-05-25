@@ -15,7 +15,7 @@ function App() {
     const pokemon = inputRef.current.value
     const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemon}/`
 
-    if (!pokemon == '') {
+    if (pokemon !== '') {
       try {
         const pokemonData = await axios.get(apiUrl)
         const specieData = await axios.get(pokemonData.data.species.url)
