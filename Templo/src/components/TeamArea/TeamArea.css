@@ -5,17 +5,19 @@
     border-radius: 10px;
     padding: 50px;
     text-align: left;
+    margin-top: 50px;
 }
 
-.pokemon-container {
-    width: 280px;
+.pokemonTeam-container {
+    width: 190px;
+    height: 320px;
     border-radius: 16px;
     border: 6px solid #f5c842;
     outline: 3px solid #b8860b;
-    background: radial-gradient(ellipse at 60% 40%, #ff6a00cc, #ee0979cc),
-                radial-gradient(ellipse at 30% 70%, #ff4500aa, transparent),
-                radial-gradient(ellipse at 80% 80%, #ff8c00bb, transparent),
-                linear-gradient(160deg, #ff6a00, #ee0979);
+    background: radial-gradient(ellipse at 60% 40%, #00ccff62, #09dfee46),
+                radial-gradient(ellipse at 30% 70%, #3700ff54, transparent),
+                radial-gradient(ellipse at 80% 80%, #6200ff3a, transparent),
+                linear-gradient(160deg, #00ffd53b, #0992ee33);
     box-shadow:
         0 0 0 2px #f5c842,
         0 8px 32px rgba(0, 0, 0, 0.5),
@@ -56,11 +58,11 @@
     background: rgba(0, 0, 0, 0.28);
     color: #fff;
     font-family: "Orbitron", sans-serif;
-    font-size: 5px;
-    font-weight: 350;
+    font-size: 10px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    padding: 2px 5px;
+    padding: 4px 10px;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(4px);
@@ -141,70 +143,50 @@
     font-weight: bold;
 }
 
-.buttonAdd:disabled {
-    background-color: #555;
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.buttonAdd:hover:disabled{
-    background-color: #555;
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 .buttonAdd:hover{
     background-color: #1b1b1b;
 }
 
-.nextEvolution-container {
-    margin-top: 60px;
-    text-align: left;
-}
-
-.no-evolution {
-    color: rgba(255, 255, 255, 0.55);
-    font-family: "Orbitron", sans-serif;
-    font-size: 12px;
-    margin-top: 12px;
+.team-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
     text-align: center;
 }
 
-.evolution-timeline {
-    display: flex;
-    flex-wrap: wrap;
+.team-cards .pokemonTeam-container .buttonAdd {
+    margin-top: auto;
+}
+
+.team-cards .pokemon-image {
+    width: 140px;
+    height: 95px;
+}
+
+.pokemonTeam-container .pokemon-header {
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
-    margin-top: 26px;
+    gap: 3px;
 }
 
-.evolution-step {
-    display: flex;
-    align-items: center;
-}
-
-.evolution-step:not(:last-child)::after {
-    content: '→';
-    margin: 0 18px;
-    color: #f5c842;
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 0 0 6px rgba(245, 200, 66, 0.6);
-    align-self: center;
-    line-height: 1;
-}
-
-.evolution-name {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 20px;
-    padding: 6px 16px;
-    color: #fff;
-    font-family: "Orbitron", sans-serif;
+.pokemonTeam-container .pokemon-header h3 {
     font-size: 11px;
-    font-weight: 600;
-    text-transform: capitalize;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(4px);
+    max-width: 100%;
+    width: 100%;
+}
+
+.pokemonTeam-container .pokemon-type {
+    font-size: 7px;
+    padding: 3px 6px;
+    letter-spacing: 0.6px;
+}
+
+.pokemonTeam-container .abilities-label {
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.pokemonTeam-container .ability-item {
+    font-size: 10px;
 }

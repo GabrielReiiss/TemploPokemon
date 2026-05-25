@@ -11,12 +11,19 @@ function findNextEvolutions(chain, pokemonName) {
     return null
 }
 
-function SearchedPokemon({ pokemon, nextEvolutionPokemon }) {
+function SearchedPokemon({ pokemon, nextEvolutionPokemon, team, addToTeam }) {
 
     const nextEvolutions = findNextEvolutions(nextEvolutionPokemon.chain, pokemon.name)
+    const nextEvolutionsPokemonsName = nextEvolutions?.map(item => item.species.name) ?? []
+    let deveDesabilitar
 
-    console.log(pokemon)
-    console.log(nextEvolutionPokemon)
+     if (team.length >= 6) {
+        deveDesabilitar = true
+    } else if (team.some(p => p.id === pokemon.id)) {
+        deveDesabilitar = true
+    } else if (team.some(p => p.species.name === pokemon.species.name)) {
+        deveDesabilitar = true
+    }
 
     return (
         <div className='container-pokemonInfo'>
@@ -47,25 +54,21 @@ function SearchedPokemon({ pokemon, nextEvolutionPokemon }) {
                         </p>
                     ))}
                 </div>
-                <button className='buttonAdd'>Adicionar à equipe</button>
+                <button onClick={() => addToTeam(pokemon)} disabled={deveDesabilitar} className='buttonAdd'>Adicionar à equipe</button>
             </div>
-            <div className='nextoEvolution-container'>
+            <div className='nextEvolution-container'>
                 <h2>Próximas Evoluções</h2>
-                <div className='nextEvolution-image'>
-                    <img
-                        src={pokemon.sprites?.other['showdown'].front_default}
-                        alt={pokemon.name}
-                    />
-                </div>
-                <div className='nextEvolution-header'>
-                    {!nextEvolutions || nextEvolutions.length === 0 ? (
-                        <p>Não possui evolução</p>
-                    ) : (
-                        nextEvolutions.map((evo, index) => (
-                            <p key={index}>{evo.species.name}</p>
-                        ))
-                    )}
-                </div>
+                {nextEvolutionsPokemonsName.length === 0 ? (
+                    <p className='no-evolution'>Não possui evolução</p>
+                ) : (
+                    <div className='evolution-timeline'>
+                        {nextEvolutionsPokemonsName.map((name, index) => (
+                            <div key={index} className='evolution-step'>
+                                <span className='evolution-name'>{name}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     )
