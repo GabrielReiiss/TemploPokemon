@@ -6,7 +6,7 @@ function TeamArea({ team, removeFromTeam }) {
         <div className='container-pokemonInfo'>
             <h2>Minha Equipe</h2>
             {team.length === 0 ?
-                <div><p>Nenhum pokémon na equipe</p></div>
+                <div className='time-vazio'><p>Nenhum pokémon na equipe</p></div>
                 :
                 <div className='team-cards'>
                     {team.map((pokemon) => (

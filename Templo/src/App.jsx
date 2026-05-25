@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import axios from 'axios'
 import SearchedPokemon from './components/SearchedPokemon/SearchedPokemon'
 import TeamArea from './components/TeamArea/TeamArea'
+import SearchHistory from './components/SearchHistory/SearchHistory'
 import botaoImg from './assets/botao.png'
 import botao2Img from './assets/botao2.png'
 import './App.css'
@@ -10,12 +11,14 @@ function App() {
   const [pokemon, setPokemon] = useState(null)
   const [nextEvolutionPokemon, setNextEvolutionPokemon] = useState(null)
   const [team, setTeam] = useState([])
+  const [history, setHistory] = useState([])
   const [botaoHover, setBotaoHover] = useState(false)
   const inputRef = useRef()
 
   async function searchPokemon() {
     const pokemon = inputRef.current.value.trimEnd()
     const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemon}/`
+    const time = new Date().toLocaleTimeString('pt-BR')
 
     if (pokemon !== '') {
       try {
@@ -24,8 +27,10 @@ function App() {
         const evolutionData = await axios.get(specieData.data.evolution_chain.url)
         setPokemon(pokemonData.data)
         setNextEvolutionPokemon(evolutionData.data)
+        setHistory([...history, {pokemon: pokemon, status: 'Sucesso', time: time}])
       } catch {
         window.alert('Pokémon não encontrado. Verifique a grafia.')
+        setHistory([...history, {pokemon: pokemon, status: 'Erro', time: time}])
         return
       }
     } else {
@@ -69,6 +74,7 @@ function App() {
       </div>
       {pokemon && <SearchedPokemon pokemon={pokemon} nextEvolutionPokemon={nextEvolutionPokemon} team={team} addToTeam={addToTeam}/>}
       {team && <TeamArea team={team} removeFromTeam={removeFromTeam}/>}
+      {history && <SearchHistory history={history}/>}
     </div>
   )
 }
