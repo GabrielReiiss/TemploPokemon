@@ -18,10 +18,10 @@
     border-radius: 16px;
     border: 6px solid #f5c842;
     outline: 3px solid #b8860b;
-    background: radial-gradient(ellipse at 60% 40%, #00ccff62, #09dfee46),
-                radial-gradient(ellipse at 30% 70%, #3700ff54, transparent),
-                radial-gradient(ellipse at 80% 80%, #6200ff3a, transparent),
-                linear-gradient(160deg, #00ffd53b, #0992ee33);
+    background: radial-gradient(ellipse at 60% 40%, #0ea5e9cc, #0284c7cc),
+                radial-gradient(ellipse at 30% 70%, #0369a1aa, transparent),
+                radial-gradient(ellipse at 80% 80%, #075985bb, transparent),
+                linear-gradient(160deg, #0ea5e9, #0369a1);
     box-shadow:
         0 0 0 2px #f5c842,
         0 8px 32px rgba(0, 0, 0, 0.5),
@@ -44,9 +44,9 @@
     width: 100%;
 }
 
-.pokemon-header h3 {
+.pokemonTeam-header h3 {
     color: #1a1a1a;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 800;
     text-transform: capitalize;
     margin: 0;
@@ -58,17 +58,17 @@
     max-width: 160px;
 }
 
-.pokemon-type {
-    background: rgba(0, 0, 0, 0.28);
+.pokemonTeam-type {
+    background: rgba(0, 0, 0, 0.35);
     color: #fff;
     font-family: "Orbitron", sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
     padding: 4px 10px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(4px);
     white-space: nowrap;
     flex-shrink: 0;
@@ -182,10 +182,10 @@
     width: 100%;
 }
 
-.pokemonTeam-container .pokemon-type {
-    font-size: 7px;
-    padding: 3px 6px;
-    letter-spacing: 0.6px;
+.pokemonTeam-container .pokemonTeam-type {
+    font-size: 9px;
+    padding: 3px 8px;
+    letter-spacing: 0.8px;
 }
 
 .pokemonTeam-container .abilities-label {

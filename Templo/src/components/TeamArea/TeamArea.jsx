@@ -11,9 +11,9 @@ function TeamArea({ team, removeFromTeam }) {
                 <div className='team-cards'>
                     {team.map((pokemon) => (
                         <div key={pokemon.id} className='pokemonTeam-container'>
-                            <div className='pokemon-header'>
+                            <div className='pokemonTeam-header'>
                                 <h3>{pokemon.name}</h3>
-                                <span className='pokemon-type'>
+                                <span className='pokemonTeam-type'>
                                     {pokemon.types?.map((item, index) => (
                                         <span key={index}>
                                             {item.type.name}
