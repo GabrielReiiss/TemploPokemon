@@ -57,7 +57,9 @@ function App() {
 
   return (
     <div className='container'>
-      <h1>Templo dos Pokémons</h1>
+      <header>
+        <h1>Templo dos Pokémons</h1>
+      </header>
       <div className='container-busca'>
         <p>Buscar Pokémon</p>
         <div className='search-row'>
