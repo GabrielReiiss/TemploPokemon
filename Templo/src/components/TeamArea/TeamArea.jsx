@@ -4,7 +4,7 @@ function TeamArea({ team, removeFromTeam }) {
 
     return (
         <div className='container-pokemonInfo'>
-            <h2>Minha Equipe</h2>
+            <h2>Minha Equipe - {team.length} / 6</h2>
             {team.length === 0 ?
                 <div className='time-vazio'><p>Nenhum pokémon na equipe</p></div>
                 :
