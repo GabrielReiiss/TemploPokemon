@@ -1,4 +1,6 @@
+import { useState, useEffect, Fragment } from 'react'
 import './SearchedPokemon.css'
+import axios from 'axios'
 
 function findNextEvolutions(chain, pokemonName) {
     if (chain.species.name === pokemonName) {
@@ -11,10 +13,30 @@ function findNextEvolutions(chain, pokemonName) {
     return null
 }
 
+async function findNextEvolutionsImage(nextEvolutionsPokemonsName){
+    var nextEvolutionImagesUrl = []
+
+    for(let i in nextEvolutionsPokemonsName){
+        const nextEvolutionsApiUrl = `https://pokeapi.co/api/v2/pokemon/${nextEvolutionsPokemonsName[i]}/`
+        const nextEvolutionsData = await axios.get(nextEvolutionsApiUrl)
+        nextEvolutionImagesUrl.push(nextEvolutionsData.data.sprites?.other['showdown'].front_default)
+    }
+
+    return nextEvolutionImagesUrl
+}
+
 function SearchedPokemon({ pokemon, nextEvolutionPokemon, team, addToTeam }) {
 
     const nextEvolutions = findNextEvolutions(nextEvolutionPokemon.chain, pokemon.name)
     const nextEvolutionsPokemonsName = nextEvolutions?.map(item => item.species.name) ?? []
+    const [nextEvolutionsPokemonsImage, setNextEvolutionsPokemonsImage] = useState([])
+
+     useEffect(() => {
+        if (nextEvolutionsPokemonsName.length === 0) return
+
+        findNextEvolutionsImage(nextEvolutionsPokemonsName).then(setNextEvolutionsPokemonsImage)
+    }, [pokemon.name])
+    
     let deveDesabilitar
 
      if (team.length >= 6) {
@@ -61,11 +83,21 @@ function SearchedPokemon({ pokemon, nextEvolutionPokemon, team, addToTeam }) {
                 {nextEvolutionsPokemonsName.length === 0 ? (
                     <p className='no-evolution'>Não possui evolução</p>
                 ) : (
+                    
                     <div className='evolution-timeline'>
                         {nextEvolutionsPokemonsName.map((name, index) => (
-                            <div key={index} className='evolution-step'>
-                                <span className='evolution-name'>{name}</span>
-                            </div>
+                            <Fragment key={index}>
+                                <div className='evolution-step'>
+                                    <img
+                                        src={nextEvolutionsPokemonsImage[index]}
+                                        alt={name}
+                                    />
+                                    <span className='evolution-name'>{name}</span>
+                                </div>
+                                {index < nextEvolutionsPokemonsName.length - 1 && (
+                                    <span className='evolution-arrow'>→</span>
+                                )}
+                            </Fragment>
                         ))}
                     </div>
                 )}
