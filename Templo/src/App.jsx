@@ -6,13 +6,14 @@ import SearchHistory from './components/SearchHistory/SearchHistory'
 import botaoImg from './assets/botao.png'
 import botao2Img from './assets/botao2.png'
 import './App.css'
+import { addHistory, useAppDispatch } from './store'
 
 function App() {
   const [pokemon, setPokemon] = useState(null)
   const [nextEvolutionPokemon, setNextEvolutionPokemon] = useState(null)
-  const [history, setHistory] = useState([])
   const [botaoHover, setBotaoHover] = useState(false)
   const inputRef = useRef()
+  const dispatch = useAppDispatch()
 
   async function searchPokemon() {
     const pokemon = inputRef.current.value.trimEnd()
@@ -24,12 +25,20 @@ function App() {
         const pokemonData = await axios.get(apiUrl)
         const specieData = await axios.get(pokemonData.data.species.url)
         const evolutionData = await axios.get(specieData.data.evolution_chain.url)
+        dispatch(addHistory({
+          pokemon: pokemon,
+          status: 'Sucesso',
+          time: time
+        }))
         setPokemon(pokemonData.data)
         setNextEvolutionPokemon(evolutionData.data)
-        setHistory([...history, {pokemon: pokemon, status: 'Sucesso', time: time}])
       } catch {
         window.alert('Pokémon não encontrado. Verifique a grafia.')
-        setHistory([...history, {pokemon: pokemon, status: 'Erro', time: time}])
+        dispatch(addHistory({
+          pokemon: pokemon,
+          status: 'Erro',
+          time: time
+        }))
         return
       }
     } else {
@@ -59,7 +68,7 @@ function App() {
       </div>
       {pokemon && <SearchedPokemon pokemon={pokemon} nextEvolutionPokemon={nextEvolutionPokemon} />}
       {<TeamArea />}
-      {history && <SearchHistory history={history}/>}
+      {<SearchHistory />}
     </div>
   )
 }

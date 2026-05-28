@@ -9,12 +9,26 @@ type Pokemon = {
     habilities: string[]
 }
 
+type History = {
+    pokemon: string
+    status: string
+    time: string
+}
+
 type InitialState = {
     pokemons: Pokemon[]
 }
 
+type InitialStateHistory = {
+    historys: History[]
+}
+
 const initialState: InitialState = {
     pokemons: []
+}
+
+const initialStateHistory: InitialStateHistory = {
+    historys: []
 }
 
 const pokemonSlice = createSlice({
@@ -30,11 +44,24 @@ const pokemonSlice = createSlice({
     },
 })
 
+const historySlice = createSlice({
+    name: 'historys',
+    initialState: initialStateHistory,
+    reducers: {
+        addHistory: (state, { payload }: PayloadAction<History>) => {
+            state.historys.push(payload)
+        }
+    }
+})
+
 export const { addPokemon, deletePokemon } = pokemonSlice.actions
+
+ export const { addHistory } = historySlice.actions
 
 export const store = configureStore({
   reducer: {
-    pokemon: pokemonSlice.reducer
+    pokemon: pokemonSlice.reducer,
+    history: historySlice.reducer
   },
 })
 

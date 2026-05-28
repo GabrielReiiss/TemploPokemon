@@ -1,6 +1,9 @@
+import { useAppSelector } from '../../store'
 import './SearchHistory.css'
 
-function SearchHistory({ history }) {
+function SearchHistory() {
+
+    const history = useAppSelector(state => state.history.historys)
 
     return (
         <div className='container-history'>
