@@ -10,7 +10,6 @@ import './App.css'
 function App() {
   const [pokemon, setPokemon] = useState(null)
   const [nextEvolutionPokemon, setNextEvolutionPokemon] = useState(null)
-  const [team, setTeam] = useState([])
   const [history, setHistory] = useState([])
   const [botaoHover, setBotaoHover] = useState(false)
   const inputRef = useRef()
@@ -39,22 +38,6 @@ function App() {
     }
   }
 
-  function addToTeam(pokemon){
-    if(team.length >= 6){
-      return
-    } else if (team.some(p => p.id === pokemon.id)){
-      return
-    } else if (team.some(p => p.species.name === pokemon.species.name)){
-      return
-    }
-
-    setTeam([...team, pokemon])
-  }
-
-  function removeFromTeam(pokemonId){
-    setTeam(team.filter(p => p.id !== pokemonId))
-  }
-
   return (
     <div className='container'>
       <header>
@@ -74,8 +57,8 @@ function App() {
           </button>
         </div>
       </div>
-      {pokemon && <SearchedPokemon pokemon={pokemon} nextEvolutionPokemon={nextEvolutionPokemon} team={team} addToTeam={addToTeam}/>}
-      {team && <TeamArea team={team} removeFromTeam={removeFromTeam}/>}
+      {pokemon && <SearchedPokemon pokemon={pokemon} nextEvolutionPokemon={nextEvolutionPokemon} />}
+      {<TeamArea />}
       {history && <SearchHistory history={history}/>}
     </div>
   )

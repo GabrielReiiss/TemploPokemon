@@ -1,6 +1,7 @@
 import { useState, useEffect, Fragment } from 'react'
 import './SearchedPokemon.css'
 import axios from 'axios'
+import { addPokemon, useAppDispatch, useAppSelector } from '../../store'
 
 function findNextEvolutions(chain, pokemonName) {
     if (chain.species.name === pokemonName) {
@@ -25,26 +26,38 @@ async function findNextEvolutionsImage(nextEvolutionsPokemonsName){
     return nextEvolutionImagesUrl
 }
 
-function SearchedPokemon({ pokemon, nextEvolutionPokemon, team, addToTeam }) {
+function SearchedPokemon({ pokemon, nextEvolutionPokemon }) {
 
+    const team = useAppSelector((state) => state.pokemon.pokemons)
     const nextEvolutions = findNextEvolutions(nextEvolutionPokemon.chain, pokemon.name)
     const nextEvolutionsPokemonsName = nextEvolutions?.map(item => item.species.name) ?? []
     const [nextEvolutionsPokemonsImage, setNextEvolutionsPokemonsImage] = useState([])
 
-     useEffect(() => {
+    useEffect(() => {
         if (nextEvolutionsPokemonsName.length === 0) return
 
         findNextEvolutionsImage(nextEvolutionsPokemonsName).then(setNextEvolutionsPokemonsImage)
     }, [pokemon.name])
     
-    let deveDesabilitar
+    let deveDesabilitar = false
 
      if (team.length >= 6) {
         deveDesabilitar = true
-    } else if (team.some(p => p.id === pokemon.id)) {
+    } else if (team.some(p => p.id === String(pokemon.id))) {
         deveDesabilitar = true
-    } else if (team.some(p => p.species.name === pokemon.species.name)) {
+    } else if (team.some(p => p.name === pokemon.species.name)) {
         deveDesabilitar = true
+    }
+
+    const dispatch = useAppDispatch()
+    const handleSubmit = () => {
+        dispatch(addPokemon({
+            id: String(pokemon.id),
+            name: pokemon.name,
+            typePokemon: pokemon.types.map(t => t.type.name),
+            image: pokemon.sprites?.other['showdown'].front_default,
+            habilities: pokemon.abilities.map(a => a.ability.name),
+        }))
     }
 
     return (
@@ -76,7 +89,7 @@ function SearchedPokemon({ pokemon, nextEvolutionPokemon, team, addToTeam }) {
                         </p>
                     ))}
                 </div>
-                <button onClick={() => addToTeam(pokemon)} disabled={deveDesabilitar} className='buttonAdd'>Adicionar à equipe</button>
+                <button onClick={handleSubmit} disabled={deveDesabilitar} className='buttonAdd'>Adicionar à equipe</button>
             </div>
             <div className='nextEvolution-container'>
                 <h2>Próximas Evoluções</h2>

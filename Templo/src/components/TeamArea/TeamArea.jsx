@@ -1,6 +1,10 @@
+import { deletePokemon, useAppDispatch, useAppSelector } from '../../store'
 import './TeamArea.css'
 
-function TeamArea({ team, removeFromTeam }) {
+function TeamArea() {
+
+    const team = useAppSelector(state => state.pokemon.pokemons)
+    const dispatch = useAppDispatch()
 
     return (
         <div className='container-pokemonInfo'>
@@ -14,29 +18,29 @@ function TeamArea({ team, removeFromTeam }) {
                             <div className='pokemonTeam-header'>
                                 <h3>{pokemon.name}</h3>
                                 <span className='pokemonTeam-type'>
-                                    {pokemon.types?.map((item, index) => (
+                                    {pokemon.typePokemon.map((item, index) => (
                                         <span key={index}>
-                                            {item.type.name}
-                                            {index < pokemon.types.length - 1 && ' / '}
+                                            {item}
+                                            {index < pokemon.typePokemon.length - 1 && ' / '}
                                         </span>
                                     ))}
                                 </span>
                             </div>
                             <div className='pokemon-image'>
                                 <img
-                                    src={pokemon.sprites?.other['showdown'].front_default}
+                                    src={pokemon.image}
                                     alt={pokemon.name}
                                 />
                             </div>
                             <div className='pokemon-abilities'>
                                 <p className='abilities-label'>Habilidades</p>
-                                {pokemon.abilities?.map((item, index) => (
+                                {pokemon.habilities?.map((item, index) => (
                                     <p key={index} className='ability-item'>
-                                        {item.ability.name}
+                                        {item}
                                     </p>
                                 ))}
                             </div>
-                            <button onClick={() => removeFromTeam(pokemon.id)} className='buttonAdd'>Remover da equipe</button>
+                            <button onClick={() => dispatch(deletePokemon(pokemon.id))} className='buttonAdd'>Remover da equipe</button>
                         </div>
                     ))}
                 </div>
