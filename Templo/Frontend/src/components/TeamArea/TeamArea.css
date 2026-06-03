@@ -136,17 +136,21 @@
 }
 
 .buttonAdd {
-    padding: 12px;
+    padding: 8px 12px;
     border-radius: 10px;
     background-color: #2c2c2c;
-    border: 6px solid #f5c842;
-    outline: 3px solid #b8860b;
     color: white;
     border: none;
     width: 100%;
     margin-top: 5px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 13px;
+}
+
+.pokemonTeam-container .buttonAdd {
+    padding: 6px 8px;
+    font-size: 10px;
 }
 
 .buttonAdd:hover{
