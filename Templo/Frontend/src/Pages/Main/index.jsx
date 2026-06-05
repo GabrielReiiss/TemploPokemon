@@ -5,7 +5,7 @@ import TeamArea from '../../components/TeamArea/TeamArea'
 import SearchHistory from '../../components/SearchHistory/SearchHistory'
 import botaoImg from '../../assets/botao.png'
 import botao2Img from '../../assets/botao2.png'
-import './main.css'
+import './index.css'
 import { addHistory, useAppDispatch } from '../../store'
 
 function Main() {
