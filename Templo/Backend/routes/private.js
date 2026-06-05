@@ -38,4 +38,22 @@ router.post('/main', async (req, res) => {
     }
 })
 
+//Listar Pokémons do time
+router.get('/main', async (req, res) => {
+    try {
+        
+        console.log(req.userId)
+
+        const pokemons = await prisma.pokemon.findMany({
+            where: {
+                userId: req.userId
+            }
+        })
+
+        res.status(200).json(pokemons)
+    } catch (error) {
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente!' })
+    }
+})
+
 export default router
