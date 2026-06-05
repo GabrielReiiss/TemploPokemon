@@ -4,10 +4,34 @@ import { PrismaClient } from '@prisma/client'
 const router = express.Router()
 const prisma = new PrismaClient()
 
-router.get('/main', async (req, res) => {
+//Adicionar Pokémon ao time
+router.post('/main', async (req, res) => {
     try {
-        const pokemon = await prisma.pokemon.findMany()
-        res.status(200).json({message: "Pokémons encontrados com Sucesso!", pokemon})
+        const pokemon = req.body
+
+        const existingPokemon = await prisma.pokemon.findFirst({
+            where: {
+                pokemonId: pokemon.pokemonId,
+                userId: pokemon.userId,
+            }
+        })
+
+        if (existingPokemon) {
+            return res.status(400).json({ error: 'Pokémon já está no time' })
+        }
+
+        const pokemonDb = await prisma.pokemon.create({
+            data: {
+                pokemonId: pokemon.pokemonId,
+                userId: pokemon.userId,
+                name: pokemon.name,
+                type: pokemon.type,
+                image: pokemon.image,
+                habilities: pokemon.habilities,
+            }
+        })
+
+        res.status(201).json(pokemonDb)
     }
     catch (error) {
         res.status(500).json({ error: 'Erro no Servidor, tente novamente!' })
