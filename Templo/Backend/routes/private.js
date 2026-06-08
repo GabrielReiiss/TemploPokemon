@@ -42,8 +42,6 @@ router.post('/main', async (req, res) => {
 router.get('/main', async (req, res) => {
     try {
         
-        console.log(req.userId)
-
         const pokemons = await prisma.pokemon.findMany({
             where: {
                 userId: req.userId
