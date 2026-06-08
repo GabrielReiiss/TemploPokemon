@@ -12,7 +12,7 @@ router.post('/main', async (req, res) => {
         const existingPokemon = await prisma.pokemon.findFirst({
             where: {
                 pokemonId: pokemon.pokemonId,
-                userId: pokemon.userId,
+                userId: req.userId,
             }
         })
 
@@ -23,7 +23,7 @@ router.post('/main', async (req, res) => {
         const pokemonDb = await prisma.pokemon.create({
             data: {
                 pokemonId: pokemon.pokemonId,
-                userId: pokemon.userId,
+                userId: req.userId,
                 name: pokemon.name,
                 type: pokemon.type,
                 image: pokemon.image,
@@ -51,6 +51,25 @@ router.get('/main', async (req, res) => {
         res.status(200).json(pokemons)
     } catch (error) {
         res.status(500).json({ error: 'Erro no Servidor, tente novamente!' })
+    }
+})
+
+//Deletar Pokémon do time
+router.delete('/main', async (req, res) => {
+    try {
+
+        const deletedPokemon = await prisma.pokemon.delete({
+            where: {
+                pokemonId_userId: {
+                    userId: req.userId,
+                    pokemonId: req.body.pokemonId,
+                }
+            }
+        })
+
+        res.status(200).json(deletedPokemon)
+    } catch (error) {
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
     }
 })
 
