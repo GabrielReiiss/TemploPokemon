@@ -1,8 +1,8 @@
-import { useState, useEffect, Fragment } from "react";
-import "./SearchedPokemon.css";
-import axios from "axios";
-import { addPokemon, useAppDispatch, useAppSelector } from "../../store";
-import api from "../../Services/api";
+import { useState, useEffect, Fragment } from "react"
+import "./SearchedPokemon.css"
+import axios from "axios"
+import { addPokemon, useAppDispatch, useAppSelector } from "../../store"
+import api from "../../Services/api"
 
 function findNextEvolutions(chain, pokemonName) {
   if (chain.species.name === pokemonName) {

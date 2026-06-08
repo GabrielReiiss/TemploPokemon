@@ -41,6 +41,9 @@ const pokemonSlice = createSlice({
         deletePokemon: (state, { payload }: PayloadAction<string>) =>{
             state.pokemons = state.pokemons.filter(pokemon => pokemon.id !== payload)
         },
+        setPokemons: (state, { payload }: PayloadAction<Pokemon[]>) =>{
+            state.pokemons = payload
+        }
     },
 })
 
@@ -54,7 +57,7 @@ const historySlice = createSlice({
     }
 })
 
-export const { addPokemon, deletePokemon } = pokemonSlice.actions
+export const { addPokemon, deletePokemon, setPokemons } = pokemonSlice.actions
 
 export const { addHistory } = historySlice.actions
 

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 import SearchedPokemon from '../../components/SearchedPokemon/SearchedPokemon'
 import TeamArea from '../../components/TeamArea/TeamArea'
@@ -6,7 +6,8 @@ import SearchHistory from '../../components/SearchHistory/SearchHistory'
 import botaoImg from '../../assets/botao.png'
 import botao2Img from '../../assets/botao2.png'
 import './index.css'
-import { addHistory, useAppDispatch } from '../../store'
+import { addHistory, setPokemons, useAppDispatch } from '../../store'
+import api from '../../Services/api'
 
 function Main() {
   const [pokemon, setPokemon] = useState(null)
@@ -14,6 +15,26 @@ function Main() {
   const [botaoHover, setBotaoHover] = useState(false)
   const inputRef = useRef()
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    async function loadTeam() {
+      try {
+        const { data } = await api.get('/main')
+        dispatch(setPokemons(
+          data.map((p) => ({
+            id: p.id,
+            name: p.name,
+            typePokemon: p.type,
+            image: p.image,
+            habilities: p.habilities,
+          }))
+        ))
+      } catch (error) {
+        console.error('Erro ao carregar o time:', error)
+      }
+    }
+    loadTeam()
+  }, [])
 
   async function searchPokemon() {
     const pokemon = inputRef.current.value.trimEnd()
