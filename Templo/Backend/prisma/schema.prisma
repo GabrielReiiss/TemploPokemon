@@ -23,9 +23,9 @@ model Pokemon {
   pokemonId   String
   userId      String
   name        String
-  type        String
+  type        String[]
   image       String
-  habilities  String
+  habilities  String[]
 
   @@unique([pokemonId, userId])
 }
