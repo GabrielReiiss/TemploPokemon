@@ -41,7 +41,6 @@ router.post('/main', async (req, res) => {
 //Listar Pokémons do time
 router.get('/main', async (req, res) => {
     try {
-        
         const pokemons = await prisma.pokemon.findMany({
             where: {
                 userId: req.userId
@@ -57,7 +56,6 @@ router.get('/main', async (req, res) => {
 //Deletar Pokémon do time
 router.delete('/main', async (req, res) => {
     try {
-
         const deletedPokemon = await prisma.pokemon.delete({
             where: {
                 pokemonId_userId: {
@@ -68,6 +66,56 @@ router.delete('/main', async (req, res) => {
         })
 
         res.status(200).json(deletedPokemon)
+    } catch (error) {
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
+    }
+})
+
+//Adicionar pesquisa no histórico
+router.post('/history', async (req, res) => {
+    try {
+        const search = req.body
+
+        const historyDb = await prisma.history.create({
+            data: {
+                userId: req.userId,
+                term: search.term,
+                status: search.status,
+                date: search.date,
+            }
+        })
+
+        res.status(200).json(historyDb)
+    } catch (error) {
+       res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
+    }
+})
+
+//Listar o histórico
+router.get('/history', async (req,res) => {
+    try {
+        const history = await prisma.history.findMany({
+            where: {
+                userId: req.userId
+            }
+        })
+
+        res.status(200).json(history)
+    } catch (error) {
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
+    }
+})
+
+//Limpar o histórico
+router.delete('/history', async (req, res) => {
+    try {
+        const historyDelete = await prisma.history.deleteMany({
+            where: {
+                userId: req.userId
+            }
+        })
+
+        res.status(200).json(historyDelete)
     } catch (error) {
         res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
     }

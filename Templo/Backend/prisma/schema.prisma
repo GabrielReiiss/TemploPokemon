@@ -29,3 +29,11 @@ model Pokemon {
 
   @@unique([pokemonId, userId])
 }
+
+model History {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  term   String
+  status String
+  date   String
+}
