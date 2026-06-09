@@ -23,6 +23,7 @@ function Main() {
         dispatch(setPokemons(
           data.map((p) => ({
             id: p.id,
+            pokemonId: p.pokemonId,
             name: p.name,
             typePokemon: p.type,
             image: p.image,

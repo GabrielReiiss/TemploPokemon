@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 type Pokemon = {
     id: string
+    pokemonId: string
     name: string
     typePokemon: string[]
     image: string
@@ -39,7 +40,7 @@ const pokemonSlice = createSlice({
             state.pokemons.push(payload)
         },
         deletePokemon: (state, { payload }: PayloadAction<string>) =>{
-            state.pokemons = state.pokemons.filter(pokemon => pokemon.id !== payload)
+            state.pokemons = state.pokemons.filter(pokemon => pokemon.pokemonId !== payload)
         },
         setPokemons: (state, { payload }: PayloadAction<Pokemon[]>) =>{
             state.pokemons = payload

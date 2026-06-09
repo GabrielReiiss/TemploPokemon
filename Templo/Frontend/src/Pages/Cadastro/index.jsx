@@ -17,7 +17,7 @@ function Cadastro() {
             })
             alert('Usuário cadastrado com sucesso!')
         } catch (error) {
-            alert('Erro ao cadastrar usuário:', error)
+            alert('Erro ao cadastrar usuário: ' + error.response.data.error)
         }
     }
 

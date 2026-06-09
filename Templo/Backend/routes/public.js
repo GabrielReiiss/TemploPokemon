@@ -13,6 +13,16 @@ router.post('/cadastro', async (req, res) => {
     try {
     const user = req.body
 
+    const existingUser = await prisma.user.findFirst({
+        where: {
+            name: user.name
+        }
+    })
+
+    if(existingUser) {
+        return res.status(400).json({ error: 'Já existe um usuário com esse nome!' })
+    }
+
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(user.password, salt)
 
@@ -36,7 +46,7 @@ router.post('/login', async (req, res) => {
 
         const userdb = await prisma.user.findUnique({
             where: {
-                name: userInfo.name
+                name: userInfo.name,
             }
         })
 

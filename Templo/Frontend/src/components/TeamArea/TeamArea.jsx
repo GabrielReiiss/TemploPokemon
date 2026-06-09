@@ -1,10 +1,20 @@
 import { deletePokemon, useAppDispatch, useAppSelector } from '../../store'
 import './TeamArea.css'
+import api from "../../Services/api"
 
 function TeamArea() {
 
     const team = useAppSelector(state => state.pokemon.pokemons)
     const dispatch = useAppDispatch()
+
+    const handleDelete = async (pokemonId) => {
+        try {
+            await api.delete('/main', { data: { pokemonId }})
+            dispatch(deletePokemon(pokemonId))
+        } catch (error) {
+            console.error('Erro ao remover o pokémon do time:', error.message)
+        }
+    }
 
     return (
         <div className='container-pokemonInfo'>
@@ -40,7 +50,7 @@ function TeamArea() {
                                     </p>
                                 ))}
                             </div>
-                            <button onClick={() => dispatch(deletePokemon(pokemon.id))} className='buttonAdd'>Remover da equipe</button>
+                            <button onClick={() => handleDelete(pokemon.pokemonId)} className='buttonAdd'>Remover da equipe</button>
                         </div>
                     ))}
                 </div>

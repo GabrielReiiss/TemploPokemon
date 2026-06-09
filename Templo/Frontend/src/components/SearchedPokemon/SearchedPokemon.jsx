@@ -73,6 +73,7 @@ function SearchedPokemon({ pokemon, nextEvolutionPokemon }) {
     dispatch(
       addPokemon({
         id: String(pokemon.id),
+        pokemonId: String(pokemon.id),
         name: pokemon.name,
         typePokemon: pokemon.types.map((t) => t.type.name),
         image: pokemon.sprites?.other["showdown"].front_default,
