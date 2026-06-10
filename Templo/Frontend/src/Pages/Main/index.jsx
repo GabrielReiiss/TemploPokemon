@@ -6,7 +6,7 @@ import SearchHistory from '../../components/SearchHistory/SearchHistory'
 import botaoImg from '../../assets/botao.png'
 import botao2Img from '../../assets/botao2.png'
 import './index.css'
-import { addHistory, setPokemons, useAppDispatch } from '../../store'
+import { addHistory, setHistory, setPokemons, useAppDispatch } from '../../store'
 import api from '../../Services/api'
 
 function Main() {
@@ -34,7 +34,25 @@ function Main() {
         console.error('Erro ao carregar o time:', error)
       }
     }
+
+    async function loadHistory() {
+      try {
+        const { data } = await api.get('/history')
+        dispatch(setHistory(
+          data.map((h) => ({
+            id: h.id,
+            pokemon: h.term,
+            status: h.status,
+            time: h.date,
+          }))
+        ))
+      } catch (error) {
+        console.error('Erro ao carregar o histórico:', error)
+      }
+    }
+
     loadTeam()
+    loadHistory()
   }, [])
 
   async function searchPokemon() {
@@ -52,6 +70,11 @@ function Main() {
           status: 'Sucesso',
           time: time
         }))
+        api.post('/history', {
+          term: pokemon,
+          status: 'Sucesso',
+          date: String(time)
+        })
         setPokemon(pokemonData.data)
         setNextEvolutionPokemon(evolutionData.data)
       } catch {
@@ -61,6 +84,11 @@ function Main() {
           status: 'Erro',
           time: time
         }))
+        api.post('/history', {
+          term: pokemon,
+          status: 'Erro',
+          date: String(time)
+        })
         return
       }
     } else {

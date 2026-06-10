@@ -11,6 +11,7 @@ type Pokemon = {
 }
 
 type History = {
+    id: String
     pokemon: string
     status: string
     time: string
@@ -39,10 +40,10 @@ const pokemonSlice = createSlice({
         addPokemon: (state, { payload }: PayloadAction<Pokemon>) => {
             state.pokemons.push(payload)
         },
-        deletePokemon: (state, { payload }: PayloadAction<string>) =>{
+        deletePokemon: (state, { payload }: PayloadAction<string>) => {
             state.pokemons = state.pokemons.filter(pokemon => pokemon.pokemonId !== payload)
         },
-        setPokemons: (state, { payload }: PayloadAction<Pokemon[]>) =>{
+        setPokemons: (state, { payload }: PayloadAction<Pokemon[]>) => {
             state.pokemons = payload
         }
     },
@@ -54,13 +55,16 @@ const historySlice = createSlice({
     reducers: {
         addHistory: (state, { payload }: PayloadAction<History>) => {
             state.historys.push(payload)
+        },
+        setHistory: (state, { payload }: PayloadAction<History[]>) => {
+            state.historys = payload
         }
     }
 })
 
 export const { addPokemon, deletePokemon, setPokemons } = pokemonSlice.actions
 
-export const { addHistory } = historySlice.actions
+export const { addHistory, setHistory } = historySlice.actions
 
 export const store = configureStore({
   reducer: {
