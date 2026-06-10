@@ -58,13 +58,16 @@ const historySlice = createSlice({
         },
         setHistory: (state, { payload }: PayloadAction<History[]>) => {
             state.historys = payload
+        },
+        deleteAll: () => {
+            return initialStateHistory
         }
     }
 })
 
 export const { addPokemon, deletePokemon, setPokemons } = pokemonSlice.actions
 
-export const { addHistory, setHistory } = historySlice.actions
+export const { addHistory, setHistory, deleteAll } = historySlice.actions
 
 export const store = configureStore({
   reducer: {
