@@ -34,7 +34,7 @@ function Cadastro() {
                         <input ref={passwordRef} type="password" placeholder="Senha" />
                         <button type="submit" className="auth-btn">Cadastrar</button>
                     </form>
-                    <Link to="/login" className="auth-link">
+                    <Link to="/" className="auth-link">
                         Já tem conta? Faça login
                     </Link>
                 </div>
