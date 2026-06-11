@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import SearchedPokemon from '../../components/SearchedPokemon/SearchedPokemon'
 import TeamArea from '../../components/TeamArea/TeamArea'
@@ -15,6 +16,7 @@ function Main() {
   const [botaoHover, setBotaoHover] = useState(false)
   const inputRef = useRef()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function loadTeam() {
@@ -54,6 +56,11 @@ function Main() {
     loadTeam()
     loadHistory()
   }, [])
+
+  function handleLogout() {
+    localStorage.removeItem('token')
+    navigate('/')
+  }
 
   async function searchPokemon() {
     const pokemon = inputRef.current.value.trimEnd()
@@ -100,7 +107,10 @@ function Main() {
   return (
     <div className='container'>
       <header>
-        <h1>Templo dos Pokémons</h1>
+        <div className='header-inner'>
+          <h1>Templo dos Pokémons</h1>
+          <button className='btn-sair' onClick={handleLogout}>Sair</button>
+        </div>
       </header>
       <div className='container-busca'>
         <p>Buscar Pokémon</p>

@@ -9,30 +9,29 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 // Cadastro
 router.post('/cadastro', async (req, res) => {
-
     try {
-    const user = req.body
+        const user = req.body
 
-    const existingUser = await prisma.user.findFirst({
-        where: {
-            name: user.name
+        const existingUser = await prisma.user.findFirst({
+            where: {
+                name: user.name
+            }
+        })
+
+        if(existingUser) {
+            return res.status(400).json({ error: 'Já existe um usuário com esse nome!' })
         }
-    })
 
-    if(existingUser) {
-        return res.status(400).json({ error: 'Já existe um usuário com esse nome!' })
-    }
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(user.password, salt)
 
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(user.password, salt)
-
-    const userdb = await prisma.user.create({
-        data: {
-            name: user.name,
-            password: hashedPassword,
-        },
-    })
-    res.status(201).json(userdb)
+        const userdb = await prisma.user.create({
+            data: {
+                name: user.name,
+                password: hashedPassword,
+            },
+        })
+        res.status(201).json(userdb)
     } catch (error) {
         res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
@@ -40,7 +39,6 @@ router.post('/cadastro', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
-
     try {
         const userInfo = req.body
 
