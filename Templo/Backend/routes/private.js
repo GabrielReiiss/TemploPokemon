@@ -34,7 +34,7 @@ router.post('/main', async (req, res) => {
         res.status(201).json(pokemonDb)
     }
     catch (error) {
-        res.status(500).json({ error: 'Erro no Servidor, tente novamente!' })
+       res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
 })
 
@@ -49,7 +49,7 @@ router.get('/main', async (req, res) => {
 
         res.status(200).json(pokemons)
     } catch (error) {
-        res.status(500).json({ error: 'Erro no Servidor, tente novamente!' })
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
 })
 
@@ -67,7 +67,7 @@ router.delete('/main', async (req, res) => {
 
         res.status(200).json(deletedPokemon)
     } catch (error) {
-        res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
 })
 
@@ -87,7 +87,7 @@ router.post('/history', async (req, res) => {
 
         res.status(200).json(historyDb)
     } catch (error) {
-       res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
+       res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
 })
 
@@ -102,7 +102,7 @@ router.get('/history', async (req,res) => {
 
         res.status(200).json(history)
     } catch (error) {
-        res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
 })
 
@@ -117,7 +117,7 @@ router.delete('/history', async (req, res) => {
 
         res.status(200).json(historyDelete)
     } catch (error) {
-        res.status(500).json({ error: 'Erro no Servidor, tente novamente!'})
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
 })
 

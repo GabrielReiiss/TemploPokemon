@@ -34,7 +34,7 @@ router.post('/cadastro', async (req, res) => {
     })
     res.status(201).json(userdb)
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
     }
 })
 
