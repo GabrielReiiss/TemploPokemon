@@ -61,6 +61,12 @@ function Main() {
     localStorage.removeItem('token')
     navigate('/')
   }
+  
+  function search(evento) {
+    if (evento.key === 'Enter') {
+      searchPokemon()
+    }
+  }
 
   async function searchPokemon() {
     const pokemon = inputRef.current.value.trimEnd()
@@ -115,7 +121,7 @@ function Main() {
       <div className='container-busca'>
         <p>Buscar Pokémon</p>
         <div className='search-row'>
-          <input ref={inputRef} type='text' placeholder='Digite o nome ou id do pokémon desejado.'></input>
+          <input ref={inputRef} onKeyDown={search} type='text' placeholder='Digite o nome ou id do pokémon desejado.'></input>
           <button
             onClick={searchPokemon}
             onMouseEnter={() => setBotaoHover(true)}

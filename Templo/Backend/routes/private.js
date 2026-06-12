@@ -121,13 +121,4 @@ router.delete('/history', async (req, res) => {
     }
 })
 
-//Logout
-router.post('logout', async (req, res) => {
-    try {
-        res.status(200).json({ message: 'Logout realizado com sucesso!' })        
-    } catch (error) {
-        res.status(500).json({ error: 'Erro no Servidor, tente novamente! ' + error.message })
-    }
-})
-
 export default router
