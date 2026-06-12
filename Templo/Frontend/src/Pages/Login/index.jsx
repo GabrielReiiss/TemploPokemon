@@ -13,8 +13,8 @@ function Login() {
         event.preventDefault()
         try {
             const { data: token } = await api.post('/login', {
-                name: nameRef.current.value,
-                password: passwordRef.current.value
+                name: nameRef.current.value.trim(),
+                password: passwordRef.current.value.trim()
             })
 
             localStorage.setItem('token', token)

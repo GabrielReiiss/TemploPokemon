@@ -10,10 +10,14 @@ function Cadastro() {
 
     async function handleSubmit(event) {
         event.preventDefault()
+        if (nameRef.current.value.trim() === '' || passwordRef.current.value.trim() === '') {
+            alert('Preencha todos os campos para se cadastrar!')
+            return
+        }
         try {
             await api.post('/cadastro', {
-                name: nameRef.current.value,
-                password: passwordRef.current.value
+                name: nameRef.current.value.trim(),
+                password: passwordRef.current.value.trim()
             })
             alert('Usuário cadastrado com sucesso!')
         } catch (error) {
