@@ -11,6 +11,10 @@ function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault()
+        if (nameRef.current.value.trim() === '' || password.current.value.trim() === '') {
+            alert('Preencha todos os campos para fazer o login!')
+            return
+        }
         try {
             const { data: token } = await api.post('/login', {
                 name: nameRef.current.value.trim(),
